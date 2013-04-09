@@ -60,7 +60,7 @@ class IdRegionHandler(BaseHandler):
         /id/2000-2003
         '''
         ls = New.query.filter(New.id >= id1, New.id <= id2).order_by('id desc')
-        res = [new.to_dict(body=True) for new in ls]
+        res = [new.to_dict() for new in ls]
         self.write(json.dumps(res))
 
 
