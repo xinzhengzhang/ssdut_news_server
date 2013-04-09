@@ -79,7 +79,11 @@ class DateRegionHandler(BaseHandler):
         res = [new.to_dict(body=True) for new in news]
         self.write(json.dumps(res))
 
-
+class LatestNHandler(BaseHandler):
+    def get(self,latestn):
+        news=New.query.order_by('id desc limit 0,'+str(latestn))
+        res = [new.to_dict(body=True) for new in news]
+        self.write(json.dumps(res))
 class QueryById(BaseHandler):
     def get(self, id):
         '''
@@ -148,6 +152,7 @@ application = tornado.web.Application([
     (r'/test/search/', TestSearchHandler),
 
     (r'/latest$', LatestHandler),
+    (r'/latest/(\d+)$',LatestNHandler),
 
     (r'/id/(\d+)$', QueryById),
     (r'/id/(\d+)-(\d+)', IdRegionHandler),
