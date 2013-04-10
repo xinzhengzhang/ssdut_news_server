@@ -76,7 +76,7 @@ class DateRegionHandler(BaseHandler):
         logging.debug("d2=%r" % d2)
         q = New.query.filter(New.date >= d1, New.date <= d2)
         news = q.order_by('id desc')  # order by id
-        res = [new.to_dict(body=True) for new in news]
+        res = [new.to_dict(body=False) for new in news]
         self.write(json.dumps(res))
 
 class LatestNHandler(BaseHandler):
@@ -106,7 +106,7 @@ class QueryByDate(BaseHandler):
         logging.debug('query date string = %r' % date_str)
         date = datetime.date(*[int(x) for x in date_str.split('-')])
         news = New.query.filter(New.date == date)
-        news_dict = [new.to_dict(body=True) for new in news]
+        news_dict = [new.to_dict(body=False) for new in news]
         self.write(json.dumps(news_dict))
 
 
@@ -115,7 +115,7 @@ class SearchHandler(BaseHandler):
     def get(self, keywords=None):
         kw_list = keywords.split(' ')
         res = self.search(kw_list)
-        result = [r.to_dict(body=True) for r in res]
+        result = [r.to_dict(body=False) for r in res]
         self.write(json.dumps(result))
 
 
