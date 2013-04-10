@@ -82,7 +82,7 @@ class DateRegionHandler(BaseHandler):
 class LatestNHandler(BaseHandler):
     def get(self,latestn):
         news=New.query.order_by('id desc limit 0,'+str(latestn))
-        res = [new.to_dict(body=True) for new in news]
+        res = [new.to_dict(body=False) for new in news]
         self.write(json.dumps(res))
 class QueryById(BaseHandler):
     def get(self, id):
