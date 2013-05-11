@@ -68,6 +68,11 @@ class IdIPhoneRegionHandler(BaseHandler):
         res = [new.to_dict() for new in ls]
         self.write(json.dumps(res))
 
+class IdOlderIPhoneRegionHandler(BaseHandler):
+    def get(self,id,format='json'):
+        ls = New.query.filter(New.id < id).order_by('id desc limit 0,15')
+        res = [new.to_dict() for new in ls]
+        self.write(json.dumps(res))
 class DateRegionHandler(BaseHandler):
     def get(self, date1, date2):
         '''
@@ -172,6 +177,7 @@ application = tornado.web.Application([
         tornado.web.StaticFileHandler,
         dict(path=settings['static_path'])),
     (r'/iPhoneGet/id/(\d+)$',IdIPhoneRegionHandler),
+    (r'/iPhoneGetOlder/id/(\d+)$',IdOlderIPhoneRegionHandler),
     (r'/feed',rssFeed)
     ,
 ], **settings)
