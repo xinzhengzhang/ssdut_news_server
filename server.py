@@ -60,18 +60,18 @@ class IdRegionHandler(BaseHandler):
         /id/2000-2003
         '''
         ls = New.query.filter(New.id >= id1, New.id <= id2).order_by('id desc')
-        res = [new.to_dict() for new in ls]
+        res = [new.to_dict(body=True) for new in ls]
         self.write(json.dumps(res))
 class IdIPhoneRegionHandler(BaseHandler):
     def get(self,id,format='json'):
         ls = New.query.filter(New.id > id).order_by('id desc')
-        res = [new.to_dict() for new in ls]
+        res = [new.to_dict(body=True) for new in ls]
         self.write(json.dumps(res))
 
 class IdOlderIPhoneRegionHandler(BaseHandler):
     def get(self,id,format='json'):
         ls = New.query.filter(New.id < id).order_by('id desc limit 0,15')
-        res = [new.to_dict() for new in ls]
+        res = [new.to_dict(body=True) for new in ls]
         self.write(json.dumps(res))
 class DateRegionHandler(BaseHandler):
     def get(self, date1, date2):
@@ -85,7 +85,7 @@ class DateRegionHandler(BaseHandler):
         logging.debug("d2=%r" % d2)
         q = New.query.filter(New.date >= d1, New.date <= d2)
         news = q.order_by('id desc')  # order by id
-        res = [new.to_dict(body=False) for new in news]
+        res = [new.to_dict(body=True) for new in news]
         self.write(json.dumps(res))
 
 class LatestNHandler(BaseHandler):
