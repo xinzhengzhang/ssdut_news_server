@@ -28,7 +28,19 @@ class New(Base):
 
     def __unicode__(self):
         return self.__repr__()
-
+    def to_dict_nobody(self,body=True,raw=False):
+        d = {}
+        keys = ['id', 'title', 'link',
+                'publisher', 'source', 'source_link']
+        if body:
+            #keys.append('body')
+            keys.append('clean_body')
+        if raw:
+            keys.append('raw')
+        for k in keys:
+            d[k] = getattr(self, k)
+        d['date'] = str(self.date)
+        return d
     def to_dict(self, body=False, raw=False):
         ''' default doesn't include body of news and page raw'''
         d = {}
